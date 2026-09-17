@@ -39,7 +39,7 @@ RENAME_PRD_INFO = {
     "prd_end_dt": "product_end_date",
 }
 
-RENAME_SALES_DETAILS= {
+RENAME_SALES_DETAILS = {
     "sls_ord_num": "order_number",
     "sls_prd_key": "product_number",
     "sls_cust_id": "customer_id",
@@ -51,18 +51,18 @@ RENAME_SALES_DETAILS= {
     "sls_price": "price",
 }
 
-RENAME_CUST_AZ12={
+RENAME_CUST_AZ12 = {
     "CID": "customer_number",
     "BDATE": "birthdate",
     "GEN": "gender",
 }
 
-RENAME_LOC_A101={
+RENAME_LOC_A101 = {
     "CID": "customer_number",
     "CNTRY": "country",
 }
 
-RENAME_PX_CAT_G1V2={
+RENAME_PX_CAT_G1V2 = {
     "ID": "category_id",
     "CAT": "category",
     "SUBCAT": "subcategory",
@@ -71,4 +71,4 @@ RENAME_PX_CAT_G1V2={
 
 DATE_FORMAT_DMY = "%d-%m-%Y"   # for "06-10-2025" style dates
 DATE_FORMAT_YMD = "%Y%m%d"     # for "20101229" style dates
-CSV_SEP = ","          
+CSV_SEP = ","
