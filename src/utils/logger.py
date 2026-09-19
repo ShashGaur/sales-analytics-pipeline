@@ -1,6 +1,6 @@
 import logging
 
-def get_logger(name):
+def get_logger(name: str):
   logger=logging.getLogger(name)
   if logger.handlers:
     return logger

@@ -7,3 +7,6 @@ venv/
 outputs/reports/*.csv
 outputs/exports/*.csv
 outputs/exports/*.xlsx
+data/bronze/*.parquet
+data/silver/*.parquet
+data/gold/*.parquet
