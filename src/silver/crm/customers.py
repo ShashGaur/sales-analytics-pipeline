@@ -12,7 +12,7 @@ def clean_crm_customers():
   stringcols=df.columns[df.dtypes=="str"]
 
   for col in stringcols:
-    df[col].str.strip()
+    df[col]=df[col].str.strip()
 
   logger.info(f"Trimmed unnecessary whitespaces from {len(stringcols)} colums")
 
