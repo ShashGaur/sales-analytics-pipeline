@@ -17,8 +17,12 @@ def clean_crm_customers():
   logger.info(f"Trimmed unnecessary whitespaces from {len(stringcols)} colums")
 
   nullcst_id=len(df[df['cst_id'].isna()])
+
   df=df.dropna(subset=['cst_id'])
+
   logger.info(f"Dropped {nullcst_id} rows with null Customer ID")
+
+  df["cst_id"] = df["cst_id"].astype("int64")
 
   df["cst_gndr"] = df["cst_gndr"].str.upper().map({"M": "Male", "F": "Female"}).fillna("n/a")
 
@@ -30,7 +34,7 @@ def clean_crm_customers():
 
   df["cst_create_date"] = pd.to_datetime(df["cst_create_date"], format=settings.DATE_FORMAT_DMY, errors="coerce")
 
-  logger.info(f"Normalized Marital Status from S to Single and M to Married")
+  logger.info(f"Normalized string date to Date format")
   
   dup_rows = df.duplicated().sum()
   logger.info(f"Full row duplicates found: {dup_rows}")
@@ -41,7 +45,14 @@ def clean_crm_customers():
   if(dup_rows):
     df=df.drop_duplicates()
 
-  logger.info(f'Dropped {dup_rows} full row duplicate rows')
+  if dup_keys > 0:
+    dups = df[df.duplicated(subset=["cst_id"], keep=False)].sort_values("cst_id")
+    logger.warning(f"Duplicate rows:\n{dups.to_string()}")
+
+  if dup_rows == 0:
+    logger.info("No full row duplicates found")
+  else:
+    logger.info(f'Dropped {dup_rows} full row duplicate rows')
 
   df = df.rename(columns=settings.RENAME_CUST_INFO)
 
