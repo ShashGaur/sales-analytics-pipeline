@@ -14,7 +14,7 @@ def clean_crm_customers():
   for col in stringcols:
     df[col]=df[col].str.strip()
 
-  logger.info(f"Trimmed unnecessary whitespaces from {len(stringcols)} colums")
+  logger.info(f"Trimmed unnecessary whitespaces from {len(stringcols)} columns")
 
   nullcst_id=len(df[df['cst_id'].isna()])
 
@@ -58,9 +58,11 @@ def clean_crm_customers():
 
   logger.info("Renamed columns")
 
-  df.to_parquet(settings.SILVER_DIR/"crm_customers.parquet", index=False)
+  output_path=settings.SILVER_DIR/"crm_customers.parquet"
 
-  logger.info(f"Written {len(df)} rows to {settings.SILVER_DIR/"crm_customers.parquet"}")
+  df.to_parquet(output_path, index=False)
+
+  logger.info(f"Written {len(df)} rows to {output_path}")
 
 
 if __name__=="__main__":
