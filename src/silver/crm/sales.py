@@ -22,7 +22,7 @@ def clean_crm_sales():
 
   df["sls_due_dt"] = pd.to_datetime(df["sls_due_dt"].astype(str), format="%Y%m%d", errors="coerce")
 
-  logger.info(f"Normalized string dates to Date format")
+  logger.info(f"Normalized integer dates to Date format")
 
   bad_sales=(df["sls_sales"].isna()) | (df["sls_sales"]<=0)
 

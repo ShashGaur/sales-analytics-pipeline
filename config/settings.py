@@ -70,5 +70,9 @@ RENAME_PX_CAT_G1V2 = {
 }
 
 DATE_FORMAT_DMY = "%d-%m-%Y"   # for "06-10-2025" style dates
+
 DATE_FORMAT_YMD = "%Y-%m-%d"     # for "2010-12-29" style dates
+
 CSV_SEP = ","
+
+ERP_CID_PREFIX = "NAS"
