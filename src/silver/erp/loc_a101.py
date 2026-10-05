@@ -30,6 +30,8 @@ def clean_erp_loc_a101():
 }
   df["CNTRY"]=df["CNTRY"].replace(COUNTRY_MAP)
 
+  logger.info(f"Normalized country names")
+
   msk=(df["CNTRY"]=="") | (df["CNTRY"].isna())
 
   df.loc[msk, "CNTRY"]="Unknown"
