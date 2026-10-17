@@ -46,8 +46,21 @@ def clean_crm_customers():
     df=df.drop_duplicates()
 
   if dup_keys > 0:
-    dups = df[df.duplicated(subset=["cst_id"], keep=False)].sort_values("cst_id")
-    logger.warning(f"Duplicate rows:\n{dups.to_string()}")
+    dups = df[df.duplicated(subset=["cst_id"], keep=False)].sort_values(["cst_id", "cst_create_date"])
+
+    logger.warning(f"Duplicate rows before dedup:\n{dups.to_string()}")
+
+    before = len(df)
+
+    df = df.sort_values(["cst_id", "cst_create_date"]).drop_duplicates(subset=["cst_id"], keep="last")
+
+    dropped = before - len(df)
+
+    logger.info(f"Dropped {dropped} SCD Type 2 duplicate rows (kept most recent per cst_id)")
+
+    remaining = df.duplicated(subset=["cst_id"]).sum()
+    
+    logger.info(f"Duplicate customer_ids remaining after dedup: {remaining}")
 
   if dup_rows == 0:
     logger.info("No full row duplicates found")
