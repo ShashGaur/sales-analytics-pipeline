@@ -26,6 +26,13 @@ def clean_erp_px_cat_g1v2():
 
   logger.info(f"Normalized Maintenance column")
 
+  dup_rows = df.duplicated().sum()
+  logger.info(f"Full-row duplicates found: {dup_rows}")
+
+  if dup_rows:
+    df = df.drop_duplicates()
+    logger.info(f"Dropped {dup_rows} full-row duplicate rows")
+
   df=df.rename(columns=settings.RENAME_PX_CAT_G1V2)
 
   logger.info("Renamed columns")

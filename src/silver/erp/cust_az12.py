@@ -33,6 +33,14 @@ def clean_erp_cust_az12():
 
   logger.info(df['GEN'].value_counts(dropna=False))
 
+  dup_rows = df.duplicated().sum()
+  
+  logger.info(f"Full-row duplicates found: {dup_rows}")
+
+  if dup_rows:
+    df = df.drop_duplicates()
+    logger.info(f"Dropped {dup_rows} full-row duplicate rows")
+
   df = df.rename(columns=settings.RENAME_CUST_AZ12)
   
   logger.info("Renamed columns")

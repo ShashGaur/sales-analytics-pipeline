@@ -38,6 +38,14 @@ def clean_erp_loc_a101():
 
   logger.info(df['CNTRY'].value_counts(dropna=False))
 
+  dup_rows = df.duplicated().sum()
+  
+  logger.info(f"Full-row duplicates found: {dup_rows}")
+
+  if dup_rows:
+    df = df.drop_duplicates()
+    logger.info(f"Dropped {dup_rows} full-row duplicate rows")
+
   df=df.rename(columns=settings.RENAME_LOC_A101)
 
   logger.info("Renamed columns")

@@ -54,6 +54,14 @@ def clean_crm_sales():
 
   logger.warning(f"Deferred mismatches (sample):\n{df.loc[mismatch, ['sls_ord_num','sls_quantity','sls_sales','sls_price']].head(10).to_string()}")
 
+  dup_rows = df.duplicated().sum()
+  
+  logger.info(f"Full-row duplicates found: {dup_rows}")
+
+  if dup_rows:
+    df = df.drop_duplicates()
+    logger.info(f"Dropped {dup_rows} full-row duplicate rows")
+
   df = df.rename(columns=settings.RENAME_SALES_DETAILS)
 
   logger.info("Renamed columns")

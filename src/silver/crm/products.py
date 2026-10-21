@@ -58,6 +58,14 @@ def clean_crm_products():
   if end_missing:
     logger.info(f"{end_missing} rows have missing end date")
 
+  dup_rows = df.duplicated().sum()
+  
+  logger.info(f"Full-row duplicates found: {dup_rows}")
+
+  if dup_rows:
+    df = df.drop_duplicates()
+    logger.info(f"Dropped {dup_rows} full-row duplicate rows")
+
   df = df.rename(columns=settings.RENAME_PRD_INFO)
   
   logger.info("Renamed columns")
