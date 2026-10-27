@@ -44,10 +44,22 @@ def clean_crm_products():
 
   start_missing=(df["prd_start_dt"].isna()).sum()
 
-  end_missing=(df["prd_end_dt"].isna()).sum()
+  
 
   if start_after_end:
     logger.warning(f"{start_after_end} rows have start_date >= end_date")
+
+    bad_mask=df['prd_start_dt'].notna() & df['prd_end_dt'].notna() & (df["prd_start_dt"] >= df["prd_end_dt"])
+
+    gaps = (df.loc[bad_mask, "prd_start_dt"] - df.loc[bad_mask, "prd_end_dt"]).dt.days
+
+    logger.warning(f"Gap (start - end) days — min:{gaps.min()}, max:{gaps.max()}, std:{gaps.std():.2f}")
+
+    df.loc[bad_mask,"prd_end_dt"]=pd.NaT
+
+    logger.info(f"Nulled end_date for {start_after_end} rows — unrecoverable, kept as active versions")
+
+  end_missing=(df["prd_end_dt"].isna()).sum()
 
   if both_missing:
     logger.warning(f"{both_missing} rows have both start and end dates missing")
